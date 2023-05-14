@@ -32,9 +32,9 @@ public class RuleApiController {
     @PostMapping("/rules")
     public CreateRuleResponse createRule(@RequestBody @Valid CreateRuleRequest request) {
         RuleForm ruleForm = new RuleForm(request.getName(), request.getAbout(), request.getXp().toString(),request.getCount().toString(), request.getProvider(), request.getDifficulty());
-        Rule rule = ruleService.create(ruleForm).getData();
+        Long ruleId = ruleService.create(ruleForm);
 
-        return new CreateRuleResponse(rule.getId());
+        return new CreateRuleResponse(ruleId);
     }
 
     /**
@@ -48,7 +48,7 @@ public class RuleApiController {
                                          @RequestBody @Valid ModifyRuleRequest request) {
         RuleForm ruleForm = new RuleForm(request.getName(), request.getAbout(), request.getXp().toString(),request.getCount().toString(), request.getProvider(), request.getDifficulty());
         ruleService.modify(id, ruleForm);
-        Rule rule = ruleService.getRule(id).getData();
+        Rule rule = ruleService.getRule(id);
 
         return new ModifyRuleResponse(rule.getName(), rule.getAbout(), rule.getXp(),rule.getCount() ,rule.getProvider() ,rule.getDifficulty());
     }

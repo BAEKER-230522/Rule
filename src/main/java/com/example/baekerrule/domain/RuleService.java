@@ -2,8 +2,10 @@ package com.example.baekerrule.domain;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.dto.RuleForm;
+import com.example.baekerrule.exception.NotFoundException;
 import com.example.baekerrule.out.RuleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +28,7 @@ public class RuleService {
      * 생성
      */
     @Transactional
-    public RsData<Rule> create(RuleForm ruleForm) {
+    public Long create(RuleForm ruleForm) {
         Rule rule = Rule.builder()
                 .name(ruleForm.getName())
                 .about(ruleForm.getAbout())
@@ -36,7 +38,7 @@ public class RuleService {
                 .difficulty(ruleForm.getDifficulty())
                 .build();
         ruleRepository.save(rule);
-        return RsData.of("S-1", "Rule 생성 완료", rule);
+        return rule.getId();
     }
 
     /**
@@ -46,7 +48,7 @@ public class RuleService {
 
     @Transactional
     public void modify(Long ruleId, RuleForm ruleForm) {
-        Rule rule = getRule(ruleId).getData();
+        Rule rule = getRule(ruleId);
 
         Rule rule1 = rule.toBuilder()
                 .name(ruleForm.getName())
@@ -56,11 +58,10 @@ public class RuleService {
                 .difficulty(ruleForm.getDifficulty())
                 .build();
         ruleRepository.save(rule1);
-        RsData.of("S-1", "규칙이 수정 되었습니다.", rule1);
     }
 
     public void setForm(Long ruleId, RuleForm ruleForm) {
-        Rule rule = getRule(ruleId).getData();
+        Rule rule = getRule(ruleId);
         ruleForm.setName(rule.getName());
         ruleForm.setAbout(rule.getAbout());
         ruleForm.setXp(rule.getXp().toString());
@@ -73,16 +74,20 @@ public class RuleService {
      * 조회
      */
 
-    public RsData<Rule> getRule(Long id) {
-        Optional<Rule> rs = ruleRepository.findById(id);
-        return rs.map(rule -> RsData.of("S-1", "Rule 조회 성공", rule))
-                .orElseGet(() -> RsData.of("F-1", "Rule 조회 실패"));
+    public Rule getRule(Long id) {
+        Optional<Rule> rule = ruleRepository.findById(id);
+        if (rule.isEmpty()) {
+            throw new NotFoundException("찾을 수 없습니다");
+        }
+        return rule.get();
     }
 
-    public RsData<Rule> getRule(String name) {
-        Optional<Rule> rs = ruleRepository.findByName(name);
-        return rs.map(rule -> RsData.of("S-1", "Rule 조회 성공" ,rule))
-                .orElseGet(() -> RsData.of("F-1", "Rule 조회 실패"));
+    public Rule getRule(String name) {
+        Optional<Rule> rule = ruleRepository.findByName(name);
+        if (rule.isEmpty()) {
+            throw new NotFoundException("찾을 수 없습니다");
+        }
+        return rule.get();
     }
 
     public List<Rule> getRuleList() {
@@ -109,7 +114,6 @@ public class RuleService {
     @Transactional
     public void delete(Rule rule) {
         this.ruleRepository.delete(rule);
-        RsData.of("S-1", "규칙이 삭제 되었습니다.");
     }
 
 }
