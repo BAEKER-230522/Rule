@@ -18,5 +18,4 @@ public class ExceptionController {
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
 
-    
 }
