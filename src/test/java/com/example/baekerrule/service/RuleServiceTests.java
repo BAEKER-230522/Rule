@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -29,7 +30,7 @@ public class RuleServiceTests {
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
         Long ruleId = ruleService.create(ruleForm);
 
-        Rule rule = ruleService.getRule(ruleId);
+        Rule rule = ruleService.getRule(ruleId).getData();
 
         assertThat(rule.getId()).isEqualTo(ruleId);
         assertThat(rule.getName()).isEqualTo(ruleForm.getName());
@@ -42,13 +43,16 @@ public class RuleServiceTests {
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
         Long ruleId = ruleService.create(ruleForm);
 
-        Rule rule = ruleService.getRule(ruleId);
+        Rule rule = ruleService.getRule(ruleId).getData();
         // 수정
         RuleForm updateRule = new RuleForm("수정이름", "수정소개", "5", "2", "BOJ", "SILVER");
         ruleService.modify(rule.getId(), updateRule);
+        Rule findRule = ruleService.getRule(ruleId).getData();
+
         assertThat(rule.getName()).isEqualTo("수정이름");
         assertThat(rule.getId()).isEqualTo(ruleId);
         assertThat(rule.getProvider()).isEqualTo("BOJ");
+        assertThat(rule).hasSameHashCodeAs(findRule);
     }
 
     @Test
@@ -57,12 +61,12 @@ public class RuleServiceTests {
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
         Long ruleId = ruleService.create(ruleForm);
 
-        Rule rule = ruleService.getRule(ruleId);
+        Rule rule = ruleService.getRule(ruleId).getData();
 
         ruleService.delete(rule);
 
         try {
-            Rule searchRule = ruleService.getRule(ruleId);
+            Rule searchRule = ruleService.getRule(ruleId).getData();
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }

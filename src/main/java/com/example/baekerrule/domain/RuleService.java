@@ -3,6 +3,7 @@ package com.example.baekerrule.domain;
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.dto.RuleForm;
 import com.example.baekerrule.exception.NotFoundException;
+import com.example.baekerrule.exception.RsData;
 import com.example.baekerrule.out.RuleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -48,7 +49,7 @@ public class RuleService {
 
     @Transactional
     public void modify(Long ruleId, RuleForm ruleForm) {
-        Rule rule = getRule(ruleId);
+        Rule rule = getRule(ruleId).getData();
 
         Rule rule1 = rule.toBuilder()
                 .name(ruleForm.getName())
@@ -61,7 +62,7 @@ public class RuleService {
     }
 
     public void setForm(Long ruleId, RuleForm ruleForm) {
-        Rule rule = getRule(ruleId);
+        Rule rule = getRule(ruleId).getData();
         ruleForm.setName(rule.getName());
         ruleForm.setAbout(rule.getAbout());
         ruleForm.setXp(rule.getXp().toString());
@@ -74,20 +75,20 @@ public class RuleService {
      * 조회
      */
 
-    public Rule getRule(Long id) {
+    public RsData<Rule> getRule(Long id) {
         Optional<Rule> rule = ruleRepository.findById(id);
         if (rule.isEmpty()) {
             throw new NotFoundException("찾을 수 없습니다");
         }
-        return rule.get();
+        return RsData.successOf(rule.get());
     }
 
-    public Rule getRule(String name) {
+    public RsData<Rule> getRule(String name) {
         Optional<Rule> rule = ruleRepository.findByName(name);
         if (rule.isEmpty()) {
             throw new NotFoundException("찾을 수 없습니다");
         }
-        return rule.get();
+        return RsData.of("S-1", "조회 성공", rule.get());
     }
 
     public List<Rule> getRuleList() {
