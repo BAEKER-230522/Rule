@@ -57,8 +57,7 @@ public class RuleApiController {
 
         ruleService.modify(id, ruleForm);
         Rule rule = ruleService.getRule(id).getData();
-        return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule.getName(), rule.getAbout(),
-                rule.getXp(), rule.getCount(), rule.getProvider(), rule.getDifficulty()));
+        return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
 
 //        return new ModifyRuleResponse(rule.getName(), rule.getAbout(), rule.getXp(),rule.getCount() ,rule.getProvider() ,rule.getDifficulty());
     }
@@ -73,8 +72,7 @@ public class RuleApiController {
     public RsData<List<RuleDto>> searchRule() {
         List<Rule> rules = ruleService.getRuleList();
         List<RuleDto> collect = rules.stream()
-                .map(m -> new RuleDto(m.getName(), m.getAbout(), m.getXp(),
-                        m.getCount() ,m.getProvider(), m.getDifficulty()))
+                .map(RuleDto::new)
                 .toList();
         return new RsData<>("S-1","Rule 목록" ,collect);
     }
@@ -88,7 +86,7 @@ public class RuleApiController {
     @GetMapping("/search/{id}")
     public RsData<RuleDto> searchIdRule(@PathVariable Long id) {
         Rule rule = ruleService.getRule(id).getData();
-        return new RsData<>("S-1",String.format("%d 번 아이디 정보", id), new RuleDto(rule.getName(), rule.getAbout(), rule.getXp(), rule.getCount(), rule.getProvider(), rule.getDifficulty()));
+        return new RsData<>("S-1",String.format("%d 번 아이디 정보", id), new RuleDto(rule));
     }
 
     /**
