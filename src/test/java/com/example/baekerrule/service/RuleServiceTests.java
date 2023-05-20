@@ -70,6 +70,5 @@ public class RuleServiceTests {
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

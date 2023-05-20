@@ -30,14 +30,10 @@ public class RuleService {
      */
     @Transactional
     public Long create(RuleForm ruleForm) {
-        Rule rule = Rule.builder()
-                .name(ruleForm.getName())
-                .about(ruleForm.getAbout())
-                .xp(Integer.parseInt(ruleForm.getXp()))
-                .count(Integer.parseInt(ruleForm.getCount()))
-                .provider(ruleForm.getProvider())
-                .difficulty(ruleForm.getDifficulty())
-                .build();
+        Rule rule = Rule.createRule(ruleForm.getName(), ruleForm.getAbout(),
+                ruleForm.getProvider(), Integer.parseInt(ruleForm.getXp()),
+                Integer.parseInt(ruleForm.getCount()), ruleForm.getDifficulty());
+
         ruleRepository.save(rule);
         return rule.getId();
     }

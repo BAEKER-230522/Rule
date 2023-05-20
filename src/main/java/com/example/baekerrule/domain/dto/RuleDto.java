@@ -3,9 +3,11 @@ package com.example.baekerrule.domain.dto;
 import com.example.baekerrule.domain.Entity.Rule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class RuleDto {
     private String name;
     private String about;

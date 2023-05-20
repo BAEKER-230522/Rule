@@ -5,9 +5,13 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @AllArgsConstructor
+@Setter
+@NoArgsConstructor
 public class RuleForm {
     @NotBlank
     @Size(max = 10, min = 1)

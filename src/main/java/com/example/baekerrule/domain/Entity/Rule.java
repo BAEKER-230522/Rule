@@ -37,5 +37,15 @@ public class Rule {
 
     private Integer count;
     private String difficulty;
+
+    public static Rule createRule(String name, String about, String provider, Integer xp, Integer count, String difficulty) {
+        return builder()
+                .name(name)
+                .about(about)
+                .provider(provider)
+                .xp(xp)
+                .count(count)
+                .difficulty(difficulty).build();
+    }
 }
 
