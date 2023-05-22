@@ -1,4 +1,4 @@
-package com.example.baekerrule.exception;
+package com.example.baekerrule.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

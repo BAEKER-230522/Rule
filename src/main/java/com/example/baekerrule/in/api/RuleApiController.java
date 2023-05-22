@@ -9,12 +9,11 @@ import com.example.baekerrule.domain.dto.request.ModifyRuleRequest;
 import com.example.baekerrule.domain.dto.response.CreateRuleResponse;
 import com.example.baekerrule.domain.dto.response.ModifyRuleResponse;
 import com.example.baekerrule.exception.NumberInputException;
-import com.example.baekerrule.exception.RsData;
+import com.example.baekerrule.domain.dto.RsData;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Fetch;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class RuleApiController {
     }
 
     /**
-     * 수정
+     * Put 수정
      * param:
      * name, about, xp
      * count, provider, difficulty
@@ -71,45 +70,9 @@ public class RuleApiController {
      */
     @PatchMapping("/v1/{id}")
     public RsData<ModifyRuleResponse> updateRule(@PathVariable("id") Long id, @RequestBody Map<String, String> updates) {
-        Rule rule = ruleService.getRule(id).getData();
-        String name = updates.get("name");
-        String about = updates.get("about");
-        String strXp = updates.get("xp");
-        String  strCount = updates.get("count");
-        String provider = updates.get("provider");
-        String difficulty = updates.get("difficulty");
-
-        RuleForm ruleForm = new RuleForm();
-        ruleService.setForm(id, ruleForm);
-        if (name != null) {
-            ruleForm.setName(name);
-        }
-        if (about != null) {
-            ruleForm.setAbout(about);
-        }
-        if (strXp != null) {
-            try {
-                Integer xp = Integer.parseInt(strXp);
-                ruleForm.setXp(xp.toString());
-            } catch (NumberFormatException e) {
-                throw new NumberInputException("xp는 숫자로 입력해주세요");
-            }
-        }
-        if (strCount != null) {
-            try {
-                Integer count = Integer.parseInt(strCount);
-                ruleForm.setCount(count.toString());
-            } catch (NumberFormatException e) {
-                throw new NumberInputException("Count는 숫자로 입력해주세요");
-            }
-        }
-        if (provider != null) {
-            ruleForm.setProvider(provider);
-        }
-        if (difficulty != null) {
-            ruleForm.setDifficulty(difficulty);
-        }
+        RuleForm ruleForm = ruleService.updateRule(id, updates);
         ruleService.modify(id, ruleForm);
+        Rule rule = ruleService.getRule(id).getData();
         return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
     }
 
