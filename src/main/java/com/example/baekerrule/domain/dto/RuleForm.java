@@ -1,5 +1,6 @@
 package com.example.baekerrule.domain.dto;
 
+import com.example.baekerrule.domain.dto.request.CreateRuleRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -10,7 +11,6 @@ import lombok.Setter;
 
 @Data
 @AllArgsConstructor
-@Setter
 @NoArgsConstructor
 public class RuleForm {
     @NotBlank
@@ -32,4 +32,13 @@ public class RuleForm {
 
     @NotEmpty
     private String difficulty;
+
+    public RuleForm(CreateRuleRequest createRuleRequest) {
+        name = createRuleRequest.getName();
+        about = createRuleRequest.getAbout();
+        xp = String.valueOf(createRuleRequest.getXp());
+        count = String.valueOf(createRuleRequest.getCount());
+        provider = createRuleRequest.getProvider();
+        difficulty = createRuleRequest.getDifficulty();
+    }
 }

@@ -82,7 +82,7 @@ public class RuleService {
         String name = updates.get("name");
         String about = updates.get("about");
         String strXp = updates.get("xp");
-        String  strCount = updates.get("count");
+        String strCount = updates.get("count");
         String provider = updates.get("provider");
         String difficulty = updates.get("difficulty");
 
