@@ -72,8 +72,9 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
-}
+    systemProperty "jasypt.encryptor.password", project.getProperty("jasypt.encryptor.password")
 
+}
 
 compileJava {
     options.compilerArgs << '-Aquerydsl.generatedAnnotationClass=javax.annotation.Generated'

@@ -41,7 +41,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test with Gradle
-        run: ./gradlew --info test #-Pjasypt.encryptor.password=${{secrets.JASYPT_ENCRYPTOR_PASSWORD}}
+        run: ./gradlew --info test -Pjasypt.encryptor.password=${{secrets.JASYPT_ENCRYPTOR_PASSWORD}}
 
         # 캐싱 부분 추가
       - name: Cleanup Gradle Cache
