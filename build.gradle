@@ -79,7 +79,9 @@ tasks.named('test') {
 compileJava {
     options.compilerArgs << '-Aquerydsl.generatedAnnotationClass=javax.annotation.Generated'
 }
-
+clean {
+    delete file('src/main/generated')
+}
 
 jar{
     enabled = false
