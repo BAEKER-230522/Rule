@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+custom:
+  con: connection success!

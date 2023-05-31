@@ -7,11 +7,6 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/rule_table?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-#    username: root #ENC(MrlF9UZUaHufCgWLRE3ipQ==)
-#    password: 1234 #ENC(dhw6nRBS+50xHhqPVFnZdw==)
 message:
   topic:
     name: "rule"
