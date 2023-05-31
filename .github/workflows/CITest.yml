@@ -21,7 +21,9 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
-
+      - name: kafka, zookeeper docker-run
+        run: |
+          docker-compose up -d
 
       # 캐싱 부분 추가  ( 테스트 속도 향상)
       - name: Cache Gradle packages
