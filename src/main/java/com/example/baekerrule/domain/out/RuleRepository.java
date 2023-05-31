@@ -1,4 +1,4 @@
-package com.example.baekerrule.out;
+package com.example.baekerrule.domain.out;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import org.springframework.data.domain.Page;

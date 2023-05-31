@@ -5,7 +5,7 @@ import com.example.baekerrule.domain.dto.RuleForm;
 import com.example.baekerrule.exception.NotFoundException;
 import com.example.baekerrule.domain.dto.RsData;
 import com.example.baekerrule.exception.NumberInputException;
-import com.example.baekerrule.out.RuleRepository;
+import com.example.baekerrule.domain.out.RuleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

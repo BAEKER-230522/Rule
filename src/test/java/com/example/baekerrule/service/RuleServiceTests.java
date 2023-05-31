@@ -4,16 +4,12 @@ import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.RuleService;
 import com.example.baekerrule.domain.dto.RuleForm;
 import com.example.baekerrule.exception.NotFoundException;
-import com.example.baekerrule.out.RuleRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 

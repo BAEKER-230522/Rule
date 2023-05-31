@@ -1,4 +1,4 @@
-package com.example.baekerrule.in.api;
+package com.example.baekerrule.domain.in.api;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.RuleService;
