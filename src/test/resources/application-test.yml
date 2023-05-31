@@ -1,0 +1,24 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: baeker
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      linger:
+        ms: 10
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+custom:
+  con: connection success!
