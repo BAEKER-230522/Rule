@@ -81,33 +81,33 @@ public class RuleApiController {
      * name, about, xp
      * count, provider, difficulty
      */
-    @PutMapping("/v1/{id}")
+    @PutMapping("/v1/{ruleid}")
     @Operation(summary = "규칙전부수정", description = "이름(name), 설명(about), 경험치(xp)," +
             " 문제풀이수(count), oj 사이트(provider), 난이도(difficulty) 를 입력받아 수정", tags = "수정")
-    public RsData<ModifyRuleResponse> modifyRule(@Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("id") Long id,
+    public RsData<ModifyRuleResponse> modifyRule(@Parameter(description = "수정하고싶은 RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid,
                                          @RequestBody @Valid ModifyRuleRequest request) {
         RuleForm ruleForm = new RuleForm(request.getName(), request.getAbout(),
                 request.getXp().toString(),request.getCount().toString(), request.getProvider(), request.getDifficulty());
 
-        ruleService.modify(id, ruleForm);
-        Rule rule = ruleService.getRule(id).getData();
+        ruleService.modify(ruleid, ruleForm);
+        Rule rule = ruleService.getRule(ruleid).getData();
         return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
     }
 
     /**
      * patch 수정
-     * @param id
+     * @param ruleid
      * @param updates
      * @return patch
      */
-    @PatchMapping("/v1/{id}")
+    @PatchMapping("/v1/{ruleid}")
     @Operation(summary = "규칙수정", description = "파라미터 id 를 입력받고 수정하고 싶은 Key:value 의 내용을 입력", tags = "수정")
-    public RsData<ModifyRuleResponse> updateRule(@Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("id") Long id
+    public RsData<ModifyRuleResponse> updateRule(@Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid
                                                 , @RequestBody Map<String, String> updates) {
 
-        RuleForm ruleForm = ruleService.updateRule(id, updates);
-        ruleService.modify(id, ruleForm);
-        Rule rule = ruleService.getRule(id).getData();
+        RuleForm ruleForm = ruleService.updateRule(ruleid, updates);
+        ruleService.modify(ruleid, ruleForm);
+        Rule rule = ruleService.getRule(ruleid).getData();
         return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
     }
 
@@ -148,31 +148,31 @@ public class RuleApiController {
 
     /**
      *
-     * @param id
+     * @param ruleid
      * @return
      * name, about, xp, count, provider, difficulty
      */
-    @GetMapping("/v1/search/{id}")
+    @GetMapping("/v1/search/{ruleid}")
     @Operation(summary = "규칙 1개 상세조회", tags = "조회")
-    public RsData<RuleDto> searchIdRule(@Parameter(description = "규칙Id", example = "1")@PathVariable Long id) {
-        Rule rule = ruleService.getRule(id).getData();
-        return new RsData<>("S-1",String.format("%d 번 아이디 정보", id), new RuleDto(rule));
+    public RsData<RuleDto> searchIdRule(@Parameter(description = "RuleId 입력", example = "1")@PathVariable Long ruleid) {
+        Rule rule = ruleService.getRule(ruleid).getData();
+        return new RsData<>("S-1",String.format("%d 번 아이디 정보", ruleid), new RuleDto(rule));
     }
 
     /**
      * 삭제 요청
-     * @param id
+     * @param ruleid
      * @return
      */
-    @DeleteMapping("/v1/rules/{id}")
-    public RsData deleteRule(@PathVariable("id") Long id) {
+    @DeleteMapping("/v1/rules/{ruleid}")
+    public RsData deleteRule(@Parameter(description = "삭제하고싶은 RuleId 입력")@PathVariable("ruleid") Long ruleid) {
         try {
-            Rule rule = ruleService.getRule(id).getData();
+            Rule rule = ruleService.getRule(ruleid).getData();
             ruleService.delete(rule);
         } catch (NotFoundException e) {
-            return RsData.of("F-1", String.format("%d 번 아이디가 없습니다.", id),e.getMessage());
+            return RsData.of("F-1", String.format("%d 번 아이디가 없습니다.", ruleid),e.getMessage());
         }
-        return RsData.of("S-1", String.format("%d 번 아이디가 삭제되었습니다", id));
+        return RsData.of("S-1", String.format("%d 번 아이디가 삭제되었습니다", ruleid));
     }
 
 }

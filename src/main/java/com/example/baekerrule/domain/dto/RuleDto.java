@@ -2,6 +2,7 @@ package com.example.baekerrule.domain.dto;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
