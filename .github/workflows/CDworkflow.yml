@@ -46,4 +46,5 @@ jobs:
     steps:
       - name: deploy run
         run: |
-          sh /home1/nbpmon/dep/docker/rule/run.sh
+          sh /home/ubuntu/dep/docker/rule/run.sh
+#          임시로 ec2 sh /home1/nbpmon/dep/docker/rule/run.sh
