@@ -1,11 +1,7 @@
 spring:
-  profiles:
-    default:
   application:
     name: config-rule-dev
   config:
     import: optional:configserver:http://ec2-3-39-24-149.ap-northeast-2.compute.amazonaws.com:8080
-
-
-server:
-  port: 8083
+    activate:
+      on-profile: prod
