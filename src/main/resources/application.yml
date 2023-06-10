@@ -4,6 +4,9 @@ server:
 spring:
   profiles:
     default:
+  mvc:
+    pathmatch:
+      matching-strategy: path_pattern_parser
   application:
     name: rule-service
   kafka:
