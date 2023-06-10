@@ -3,6 +3,7 @@ package com.example.baekerrule.domain;
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.dto.RuleDto;
 import com.example.baekerrule.domain.dto.RuleForm;
+import com.example.baekerrule.domain.dto.request.UpdateRequest;
 import com.example.baekerrule.exception.NotFoundException;
 import com.example.baekerrule.domain.dto.RsData;
 import com.example.baekerrule.exception.NumberInputException;
@@ -84,13 +85,13 @@ public class RuleService {
      * @param updates
      * @return
      */
-    public RuleForm updateRule(Long id, Map<String, String> updates) {
-        String name = updates.get("name");
-        String about = updates.get("about");
-        String strXp = updates.get("xp");
-        String strCount = updates.get("count");
-        String provider = updates.get("provider");
-        String difficulty = updates.get("difficulty");
+    public RuleForm updateRule(Long id, UpdateRequest updates) {
+        String name = updates.name();
+        String about = updates.about();
+        String strXp = updates.xp();
+        String strCount = updates.count();
+        String provider = updates.provider();
+        String difficulty = updates.difficulty();
 
         RuleForm ruleForm = new RuleForm();
         setForm(id, ruleForm);

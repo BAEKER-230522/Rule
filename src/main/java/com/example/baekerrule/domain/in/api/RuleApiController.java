@@ -2,39 +2,25 @@ package com.example.baekerrule.domain.in.api;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.RuleService;
+import com.example.baekerrule.domain.dto.RsData;
 import com.example.baekerrule.domain.dto.RuleDto;
 import com.example.baekerrule.domain.dto.RuleForm;
 import com.example.baekerrule.domain.dto.request.CreateRuleRequest;
-import com.example.baekerrule.domain.dto.request.Keyword;
 import com.example.baekerrule.domain.dto.request.ModifyRuleRequest;
+import com.example.baekerrule.domain.dto.request.UpdateRequest;
 import com.example.baekerrule.domain.dto.response.CreateRuleResponse;
 import com.example.baekerrule.domain.dto.response.ModifyRuleResponse;
 import com.example.baekerrule.exception.NotFoundException;
-import com.example.baekerrule.exception.NumberInputException;
-import com.example.baekerrule.domain.dto.RsData;
-import com.example.baekerrule.exception.controller.ExceptionController;
-import io.swagger.v3.oas.annotations.*;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Page;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -103,8 +89,7 @@ public class RuleApiController {
     @PatchMapping("/v1/{ruleid}")
     @Operation(summary = "규칙수정", description = "파라미터 id 를 입력받고 수정하고 싶은 Key:value 의 내용을 입력", tags = "수정")
     public RsData<ModifyRuleResponse> updateRule(@Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid
-                                                , @RequestBody Map<String, String> updates) {
-
+                                                , @RequestBody UpdateRequest updates) {
         RuleForm ruleForm = ruleService.updateRule(ruleid, updates);
         ruleService.modify(ruleid, ruleForm);
         Rule rule = ruleService.getRule(ruleid).getData();
@@ -154,7 +139,7 @@ public class RuleApiController {
      */
     @GetMapping("/v1/search/{ruleid}")
     @Operation(summary = "규칙 1개 상세조회", tags = "조회")
-    public RsData<RuleDto> searchIdRule(@Parameter(description = "RuleId 입력", example = "1")@PathVariable Long ruleid) {
+    public RsData<RuleDto> searchIdRule(@Parameter(required = true, description = "RuleId 입력", example = "1")@PathVariable("ruleid") Long ruleid) {
         Rule rule = ruleService.getRule(ruleid).getData();
         return new RsData<>("S-1",String.format("%d 번 아이디 정보", ruleid), new RuleDto(rule));
     }

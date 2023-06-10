@@ -58,8 +58,13 @@ dependencies {
 
     // Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-}
-dependencyManagement {
+
+    // spring cloud gateway
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 }
 
 tasks.named('test') {
@@ -77,4 +82,16 @@ clean {
 
 jar{
     enabled = false
+}
+
+
+
+ext {
+    set('springCloudVersion', "2022.0.3")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }

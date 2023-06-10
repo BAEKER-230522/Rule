@@ -1,6 +1,11 @@
+server:
+  port: 8083
+
 spring:
   profiles:
-    default: dev
+    default:
+  application:
+    name: rule-service
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -35,7 +40,15 @@ logging.level:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-
+    
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
 
 
 
@@ -43,12 +56,4 @@ jasypt:
 message:
   topic:
     name: "rule"
-#spring:
-#  application:
-#    name: config-rule-prod
-#  config:
-#    import: optional:configserver:http://ec2-3-39-24-149.ap-northeast-2.compute.amazonaws.com:8080
-#    activate:
-#      on-profile: prod
-#server:
-#  port: 8083
+
