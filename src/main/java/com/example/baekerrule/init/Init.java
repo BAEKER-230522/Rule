@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 //@Profile("dev")
 @Configuration
 @RequiredArgsConstructor
+@Profile("dev")
 public class Init {
     private final InitRule initRule;
 
