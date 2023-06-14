@@ -51,7 +51,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://${custom.server}:8761/eureka/
 
 
 
@@ -60,3 +60,5 @@ message:
   topic:
     name: "rule"
 
+custom:
+  server: ENC(w10K+s4EnEwDbAxgBF+dbNEpajaAseXA)

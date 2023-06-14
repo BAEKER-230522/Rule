@@ -53,3 +53,4 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: # 실제 유레카클라이언트 주소
+
