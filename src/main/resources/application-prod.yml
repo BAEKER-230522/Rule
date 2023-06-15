@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: prod
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${custom.server}:9092
     consumer:
       group-id: baeker
       auto-offset-reset: earliest
@@ -22,7 +22,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -45,4 +45,11 @@ message:
 
 
 
-
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${custom.server}:8761/eureka/
