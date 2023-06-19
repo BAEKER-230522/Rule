@@ -16,7 +16,6 @@ public class CreateRuleRequest {
     private String about;
 
     @Schema(description = "규칙을 성공했을때 오르는 경험치", example = "1")
-    @NotEmpty
     private Integer xp;
 
     @Schema(description = "문제를 얼마나 풀어야 하는지 정함(스터디 단위)", example = "1")
