@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    default:
+    default: dev
   mvc:
     pathmatch:
       matching-strategy: path_pattern_parser
@@ -34,6 +34,11 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${custom.server}:8080/auth/realms/baeker
 
 logging.level:
   org.hibernate:
@@ -46,6 +51,7 @@ jasypt:
     
 eureka:
   instance:
+#    instance-id: ${custom.server}:${server.port}
     preferIpAddress: true
   client:
     registerWithEureka: true
@@ -61,4 +67,4 @@ message:
     name: "rule"
 
 custom:
-  server: ENC(w10K+s4EnEwDbAxgBF+dbNEpajaAseXA)
+  server: 127.0.0.1
