@@ -1,7 +1,7 @@
 package com.example.baekerrule.kafka;
 
 import com.example.baekerrule.domain.dto.RuleDto;
-import com.example.baekerrule.exception.NotFoundException;
+import com.example.baekerrule.error.exception.NotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.header.Headers;

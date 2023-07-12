@@ -10,7 +10,7 @@ import com.example.baekerrule.domain.dto.request.ModifyRuleRequest;
 import com.example.baekerrule.domain.dto.request.UpdateRequest;
 import com.example.baekerrule.domain.dto.response.CreateRuleResponse;
 import com.example.baekerrule.domain.dto.response.ModifyRuleResponse;
-import com.example.baekerrule.exception.NotFoundException;
+import com.example.baekerrule.error.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -117,8 +117,10 @@ public class RuleApiController {
             @Parameter(name = "page", description = "int 타입의 페이지 default=0", example = "0"),
             @Parameter(name = "keyword", description = "검색할때 사용하는 키워드 제목에 포함되어있는 내용", example = "이름")
     })
-    public RsData<Page<Rule>> list(@RequestParam(value = "page", defaultValue = "0") int page
-            , @RequestParam(required = false, value = "keyword", defaultValue = "") String keyword) {
+    public RsData<Page<Rule>> list(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(required = false, value = "keyword", defaultValue = "") String keyword
+    ) {
 
         Page<Rule> paging;
         if (keyword.equals("")) {

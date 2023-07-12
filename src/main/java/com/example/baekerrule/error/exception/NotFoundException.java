@@ -1,4 +1,4 @@
-package com.example.baekerrule.exception;
+package com.example.baekerrule.error.exception;
 
 public class NotFoundException extends RuntimeException {
 

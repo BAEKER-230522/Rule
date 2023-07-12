@@ -1,29 +1,22 @@
 package com.example.baekerrule.domain;
 
 import com.example.baekerrule.domain.Entity.Rule;
-import com.example.baekerrule.domain.dto.RuleDto;
+import com.example.baekerrule.domain.dto.RsData;
 import com.example.baekerrule.domain.dto.RuleForm;
 import com.example.baekerrule.domain.dto.request.UpdateRequest;
-import com.example.baekerrule.exception.NotFoundException;
-import com.example.baekerrule.domain.dto.RsData;
-import com.example.baekerrule.exception.NumberInputException;
 import com.example.baekerrule.domain.out.RuleRepository;
+import com.example.baekerrule.error.exception.NotFoundException;
+import com.example.baekerrule.error.exception.NumberInputException;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -69,7 +62,7 @@ public class RuleService {
         ruleRepository.save(rule1);
     }
 
-    public void setForm(Long ruleId, RuleForm ruleForm) {
+    private void setForm(Long ruleId, RuleForm ruleForm) {
         Rule rule = getRule(ruleId).getData();
         ruleForm.setName(rule.getName());
         ruleForm.setAbout(rule.getAbout());

@@ -1,4 +1,4 @@
-package com.example.baekerrule.exception;
+package com.example.baekerrule.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

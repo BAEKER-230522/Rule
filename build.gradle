@@ -69,7 +69,11 @@ dependencies {
     implementation'ca.pjer:logback-awslogs-appender:1.6.0'
 
     // resource security
-//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+
 
 }
 

@@ -3,7 +3,7 @@ package com.example.baekerrule.service;
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.RuleService;
 import com.example.baekerrule.domain.dto.RuleForm;
-import com.example.baekerrule.exception.NotFoundException;
+import com.example.baekerrule.error.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
