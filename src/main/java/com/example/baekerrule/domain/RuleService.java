@@ -4,7 +4,7 @@ import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.dto.RsData;
 import com.example.baekerrule.domain.dto.RuleForm;
 import com.example.baekerrule.domain.dto.request.UpdateRequest;
-import com.example.baekerrule.domain.out.RuleRepository;
+import com.example.baekerrule.domain.repository.RuleRepository;
 import com.example.baekerrule.error.exception.NotFoundException;
 import com.example.baekerrule.error.exception.NumberInputException;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +78,7 @@ public class RuleService {
      * @param updates
      * @return
      */
-    public RuleForm updateRule(Long id, UpdateRequest updates) {
+    public RuleForm patchRule(Long id, UpdateRequest updates) {
         String name = updates.name();
         String about = updates.about();
         String strXp = updates.xp();

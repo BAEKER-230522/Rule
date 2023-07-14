@@ -1,4 +1,4 @@
-package com.example.baekerrule.domain.in.api;
+package com.example.baekerrule.domain.controller;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.RuleService;
@@ -88,7 +88,7 @@ public class RuleApiController {
     @Operation(summary = "규칙수정", description = "파라미터 id 를 입력받고 수정하고 싶은 Key:value 의 내용을 입력", tags = "수정")
     public RsData<ModifyRuleResponse> updateRule(@Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid
             , @RequestBody UpdateRequest updates) {
-        RuleForm ruleForm = ruleService.updateRule(ruleid, updates);
+        RuleForm ruleForm = ruleService.patchRule(ruleid, updates);
         ruleService.modify(ruleid, ruleForm);
         Rule rule = ruleService.getRule(ruleid).getData();
         return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
