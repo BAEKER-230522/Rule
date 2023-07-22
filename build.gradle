@@ -59,9 +59,6 @@ dependencies {
     // Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
-    // spring cloud gateway
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
     // actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 

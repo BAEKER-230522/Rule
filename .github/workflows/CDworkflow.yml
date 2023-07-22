@@ -46,4 +46,4 @@ jobs:
     steps:
       - name: deploy run
         run: |
-          sh /home1/nbpmon/rule/dep/run.sh
+          sh /kube/rule/run.sh

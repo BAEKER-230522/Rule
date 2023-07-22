@@ -20,7 +20,6 @@ public class ExceptionController {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
-
     @ExceptionHandler(NumberInputException.class)
     public ResponseEntity<ErrorResponse> numberInputExceptionHandler(NumberInputException e) {
         log.error(e.getMessage());

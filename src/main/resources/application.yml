@@ -8,7 +8,7 @@ spring:
     pathmatch:
       matching-strategy: path_pattern_parser
   application:
-    name: rule-service
+    name: rule
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -34,11 +34,7 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://${custom.server}:8080/auth/realms/baeker
+
 
 logging.level:
   org.hibernate:
@@ -49,15 +45,7 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     
-eureka:
-  instance:
-#    instance-id: ${custom.server}:${server.port}
-    preferIpAddress: true
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+
 
 
 
