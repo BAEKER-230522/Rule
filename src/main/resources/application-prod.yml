@@ -53,4 +53,4 @@ message:
     name: "rule"
 
 custom:
-  server: 101.101.208.240
+  server: 10.178.0.2 #101.101.208.240
