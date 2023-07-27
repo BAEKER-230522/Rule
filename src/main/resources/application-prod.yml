@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: prod
   kafka:
-    bootstrap-servers: ${custom.server}:9092
+    bootstrap-servers: ${custom.kafka}:9092
     consumer:
       group-id: baeker
       auto-offset-reset: earliest
@@ -53,4 +53,5 @@ message:
     name: "rule"
 
 custom:
-  server: 10.178.0.2 #101.101.208.240
+  kafka: ENC(4U1Evn0+MZzVJcTiiJ3LFNB4t8ISA5Kc)
+  server: 10.22.1.11 #101.101.208.240
