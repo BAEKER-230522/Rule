@@ -39,13 +39,13 @@ jasypt:
 
 eureka:
   instance:
-    instance-id: 10.22.130.253:${server.port}
+    instance-id: ${custom.server}:${server.port}
     preferIpAddress: true
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://10.22.130.253:8761/eureka/
+      defaultZone: http://${custom.server}:8761/eureka/
 
 
 message:
@@ -54,4 +54,4 @@ message:
 
 custom:
   kafka: ENC(4U1Evn0+MZzVJcTiiJ3LFNB4t8ISA5Kc)
-  server: 10.22.130.253 #101.101.208.240
+  server: 10.22.131.215 # 유레카 내부 ip
