@@ -37,7 +37,7 @@ spring:
 
 eureka:
   instance:
-    instance-id: ${custom.server}:${server.port}
+    instance-id: ${spring.application.name}:${server.port}
     preferIpAddress: true
   client:
     registerWithEureka: true
