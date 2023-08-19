@@ -40,8 +40,9 @@ public class RuleControllerTests {
 
         String request = new ObjectMapper().writeValueAsString(createRuleRequest);
         ResultActions resultActions = mockMvc
-                .perform(post("/api/rule/v1/rules")
+                .perform(post("/api/rule/v1/rules/1")
                 .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(request));
 

@@ -15,9 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 import static com.example.baekerrule.error.ErrorResponse.NOT_ADMIN_AUTHORITY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 
@@ -27,6 +30,7 @@ public class RuleServiceTests {
     @Autowired
     RuleService ruleService;
 
+
     @MockBean
     RedisUtil redisUtil;
     @MockBean
@@ -35,8 +39,11 @@ public class RuleServiceTests {
     @BeforeEach
     void setUp() {
         // redisUtil
-        when(redisUtil.getValue(any())).thenReturn("role_admin");
+        when(redisUtil.getValue(anyString())).thenReturn("role_admin");
         // jwtUtil
+        when(jwtUtil.getClaims(any())).thenReturn(Map.of("role", "ROLE_ADMIN"));
+
+//        when(ruleService.tokenValidation(any(), any())).thenReturn(true);
     }
 
     @Test
@@ -44,7 +51,7 @@ public class RuleServiceTests {
     void createRuleTests() {
         // Rule 생성
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
-        Long ruleId = ruleService.create(ruleForm, 1L, "role_admin");
+        Long ruleId = ruleService.create(ruleForm, 1L, "ROLE_ADMIN");
 
         Rule rule = ruleService.getRule(ruleId).getData();
 
@@ -57,12 +64,12 @@ public class RuleServiceTests {
     void modifyRuleTests() {
         // 룰 생성
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
-        Long ruleId = ruleService.create(ruleForm, 1L, "role_admin");
+        Long ruleId = ruleService.create(ruleForm, 1L, "ROLE_ADMIN");
 
         Rule rule = ruleService.getRule(ruleId).getData();
         // 수정
         RuleForm updateRule = new RuleForm("수정이름", "수정소개", "5", "2", "BOJ", "SILVER");
-        ruleService.modify(rule.getId(), updateRule, 1L, "role_admin");
+        ruleService.modify(rule.getId(), updateRule, 1L, "ROLE_ADMIN");
         Rule findRule = ruleService.getRule(ruleId).getData();
 
         assertThat(rule.getName()).isEqualTo("수정이름");
@@ -75,7 +82,7 @@ public class RuleServiceTests {
     @DisplayName("삭제")
     void deleteRuleTests() {
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
-        Long ruleId = ruleService.create(ruleForm, 1L, "role_admin");
+        Long ruleId = ruleService.create(ruleForm, 1L, "ROLE_ADMIN");
 
         Rule rule = ruleService.getRule(ruleId).getData();
 
@@ -94,8 +101,11 @@ public class RuleServiceTests {
         // Rule 생성
         RuleForm ruleForm = new RuleForm("이름", "소개", "3", "1", "BOJ", "GOLD");
         String msg = "";
+        String accessToken = "";
+        when(jwtUtil.getClaims(any())).thenReturn(Map.of("role", accessToken));
+
         try {
-            Long ruleId = ruleService.create(ruleForm, 1L, "role_user");
+            Long ruleId = ruleService.create(ruleForm, 1L, accessToken);
             Rule rule = ruleService.getRule(ruleId).getData();
         } catch (ValidException e) {
             msg = e.getMessage();
