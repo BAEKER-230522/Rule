@@ -2,6 +2,10 @@ server:
   port: 8083
 
 spring:
+  data:
+    redis:
+      port: 6379
+      host: localhost
   profiles:
     default: dev
   mvc:
@@ -64,4 +68,6 @@ message:
     name: "rule"
 
 custom:
+  jwt:
+    secret-key: ENC(+GbV3Ykx/t5XFlaFHBZnXTzsSf9b3YChS2cVPTvCgwQmevtbB1Hfw91VMC/fTizxVssJvYiAMeQICsuoSrH5zNLh/jxJsXq/)
   server: 127.0.0.1

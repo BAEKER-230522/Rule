@@ -1,6 +1,5 @@
-package com.example.baekerrule.domain.dto;
+package com.example.baekerrule.domain.dto.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

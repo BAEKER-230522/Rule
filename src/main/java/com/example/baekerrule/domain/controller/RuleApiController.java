@@ -2,15 +2,14 @@ package com.example.baekerrule.domain.controller;
 
 import com.example.baekerrule.domain.Entity.Rule;
 import com.example.baekerrule.domain.RuleService;
-import com.example.baekerrule.domain.dto.RsData;
 import com.example.baekerrule.domain.dto.RuleDto;
 import com.example.baekerrule.domain.dto.RuleForm;
+import com.example.baekerrule.domain.dto.common.RsData;
 import com.example.baekerrule.domain.dto.request.CreateRuleRequest;
 import com.example.baekerrule.domain.dto.request.ModifyRuleRequest;
 import com.example.baekerrule.domain.dto.request.UpdateRequest;
 import com.example.baekerrule.domain.dto.response.CreateRuleResponse;
 import com.example.baekerrule.domain.dto.response.ModifyRuleResponse;
-import com.example.baekerrule.error.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -43,14 +42,18 @@ public class RuleApiController {
      * return:
      * Long id
      */
-    @PostMapping("/v1/rules")
+    @PostMapping("/v1/rules/{memberId}")
     @Operation(summary = "규칙 생성", description = "규칙명(name), 소개(about), 경험치(xp), 문제풀이 수(count), oj사이트(provider), 난이도(difficulty)", tags = "생성")
-    public RsData<CreateRuleResponse> createRule(@RequestBody @Valid CreateRuleRequest request) {
+    public RsData<CreateRuleResponse> createRule(
+            @RequestBody @Valid CreateRuleRequest request,
+            @RequestHeader("Authorization") String accessToken,
+            @PathVariable("memberId") Long memberId
+    ) {
 //        RuleForm ruleForm = new RuleForm(request.getName(), request.getAbout(),
 //                request.getXp().toString(),request.getCount().toString(),
 //                request.getProvider(), request.getDifficulty());
         RuleForm ruleForm = new RuleForm(request);
-        Long ruleId = ruleService.create(ruleForm);
+        Long ruleId = ruleService.create(ruleForm, memberId, accessToken);
 
         return RsData.of("S-1", "Rule 생성 완료", new CreateRuleResponse(ruleId));
     }
@@ -64,15 +67,19 @@ public class RuleApiController {
      * name, about, xp
      * count, provider, difficulty
      */
-    @PutMapping("/v1/{ruleid}")
+    @PutMapping("/v1/{memberId}/{ruleid}")
     @Operation(summary = "규칙전부수정", description = "이름(name), 설명(about), 경험치(xp)," +
             " 문제풀이수(count), oj 사이트(provider), 난이도(difficulty) 를 입력받아 수정", tags = "수정")
-    public RsData<ModifyRuleResponse> modifyRule(@Parameter(description = "수정하고싶은 RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid,
-                                                 @RequestBody @Valid ModifyRuleRequest request) {
+    public RsData<ModifyRuleResponse> modifyRule(
+            @Parameter(description = "수정하고싶은 RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid,
+            @RequestBody @Valid ModifyRuleRequest request,
+            @RequestHeader("Authorization") String accessToken,
+            @PathVariable("memberId") Long memberId
+    ) {
         RuleForm ruleForm = new RuleForm(request.getName(), request.getAbout(),
                 request.getXp().toString(), request.getCount().toString(), request.getProvider(), request.getDifficulty());
 
-        ruleService.modify(ruleid, ruleForm);
+        ruleService.modify(ruleid, ruleForm, memberId, accessToken);
         Rule rule = ruleService.getRule(ruleid).getData();
         return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
     }
@@ -84,12 +91,15 @@ public class RuleApiController {
      * @param updates
      * @return patch
      */
-    @PatchMapping("/v1/{ruleid}")
+    @PatchMapping("/v1/{memberId}/{ruleid}")
     @Operation(summary = "규칙수정", description = "파라미터 id 를 입력받고 수정하고 싶은 Key:value 의 내용을 입력", tags = "수정")
-    public RsData<ModifyRuleResponse> updateRule(@Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid
-            , @RequestBody UpdateRequest updates) {
+    public RsData<ModifyRuleResponse> updateRule(
+            @Parameter(description = "RuleId", in = ParameterIn.PATH) @PathVariable("ruleid") Long ruleid,
+            @RequestBody UpdateRequest updates, @RequestHeader("Authorization") String accessToken,
+            @PathVariable("memberId") Long memberId
+    ) {
         RuleForm ruleForm = ruleService.patchRule(ruleid, updates);
-        ruleService.modify(ruleid, ruleForm);
+        ruleService.modify(ruleid, ruleForm, memberId, accessToken);
         Rule rule = ruleService.getRule(ruleid).getData();
         return RsData.of("S-1", "수정 완료", new ModifyRuleResponse(rule));
     }
@@ -148,14 +158,15 @@ public class RuleApiController {
      * @param ruleid
      * @return
      */
-    @DeleteMapping("/v1/rules/{ruleid}")
-    public RsData deleteRule(@Parameter(description = "삭제하고싶은 RuleId 입력") @PathVariable("ruleid") Long ruleid) {
-        try {
-            Rule rule = ruleService.getRule(ruleid).getData();
-            ruleService.delete(rule);
-        } catch (NotFoundException e) {
-            return RsData.of("F-1", String.format("%d 번 아이디가 없습니다.", ruleid), e.getMessage());
-        }
-        return RsData.of("S-1", String.format("%d 번 아이디가 삭제되었습니다", ruleid));
+    @DeleteMapping("/v1/rules/{memberId}/{ruleid}")
+    public RsData<String> deleteRule(
+            @Parameter(description = "삭제하고싶은 RuleId 입력") @PathVariable("ruleid") Long ruleid,
+            @PathVariable("memberId") Long memberId,
+            @RequestHeader("Authorization") String accessToken
+    ) {
+        Rule rule = ruleService.getRule(ruleid).getData();
+        boolean delete = ruleService.delete(rule, memberId, accessToken);
+        if (delete) return RsData.of("S-1", String.format("%d 번 아이디가 삭제되었습니다", ruleid));
+        else return RsData.of("F-1", "삭제 실패");
     }
 }

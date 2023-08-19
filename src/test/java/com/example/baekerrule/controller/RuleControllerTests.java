@@ -61,7 +61,7 @@ public class RuleControllerTests {
 
         for (int i = 0; i < 5; i++) {
             RuleForm ruleForm = new RuleForm("이름" + i, "소개" + i, "1", "1", "BOJ", "GOLD");
-            ruleService.create(ruleForm);
+            ruleService.create(ruleForm, (long)i, "");
         }
 
         resultActions

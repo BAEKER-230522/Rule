@@ -1,7 +1,5 @@
 package com.example.baekerrule.domain.dto.response;
 
-import com.example.baekerrule.domain.dto.RsData;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
