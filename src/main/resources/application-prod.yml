@@ -49,7 +49,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://${custom.server}:8761/eureka/
+      defaultZone: http://eureka:8761/eureka/
 
 
 message:
